@@ -21,7 +21,7 @@ Calculates the Mean Absolute Percentage Error(MAPE) between x and the
 target.
 }
 \examples{
-mape(c(1, 2, 3))                      #> Error: different lengths (3, 0)
+\dontrun{mape(c(1, 2, 3))}            #> Error: different lengths (3, 0)
 mape(c(1, 2, 3), c(1, 4, 4))          #> 25.0
 mape(c(1, 2, NA, 4), c(2, 2, 5, NA))  #> NA
 mape(c(1, 2, NA, 4),

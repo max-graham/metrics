@@ -34,7 +34,7 @@ rmse <- function(x, target = NULL, na.rm = FALSE){
     x <- x[!is.na(x)]
   }
   
-  x %>% mse() %>% sqrt()  # return
+  sqrt(mse(x))  # return
 }
 
 mse <- function(x, target = NULL, na.rm = FALSE){
@@ -67,7 +67,7 @@ mse <- function(x, target = NULL, na.rm = FALSE){
     x <- x[!is.na(x)]
   }
   
-  x %>% {.^2} %>% mean()  # return
+  mean(x^2)  # return
 }
 
 mape <- function(x, target, na.rm = FALSE){
@@ -81,7 +81,7 @@ mape <- function(x, target, na.rm = FALSE){
   #' @param na.rm logical; should NAs be removed before calculation?
   #' @return An atomic numeric vector containing the calculated MAPE
   #' @examples 
-  #' mape(c(1, 2, 3))                      #> Error: different lengths (3, 0)
+  #' \dontrun{mape(c(1, 2, 3))}            #> Error: different lengths (3, 0)
   #' mape(c(1, 2, 3), c(1, 4, 4))          #> 25.0
   #' mape(c(1, 2, NA, 4), c(2, 2, 5, NA))  #> NA
   #' mape(c(1, 2, NA, 4),
@@ -108,16 +108,19 @@ mase <- function(x, target, m = 1, na.rm = FALSE){
   #' MASE
   #' 
   #' Calculates the Mean Absolute Scaled Error(MASE) between x and the
-  #' target. Note that this will return Inf when the last length(x) - m
-  #' values in target are all the same.
-  #' 
-  #' @param x numeric vector; the forecast to evaluate
-  #' @param target numeric vector; the target values
-  #' @param m atomic integer; the seasonal period. Default = 1 if non-seasonal
+  #' target. This is intended to be used for measuring the accuracy of a
+  #' time series forecast, since it reports the error in the context of the
+  #' naive forecast (random walk for non-seasonal, or a seasonal naive otherwise).
+  #'
+  #' @note This will return \code{Inf} when the last \code{length(x) - m}
+  #'   values in target are all the same.
+  #' @param x numeric vector; the forecast to evaluate.
+  #' @param target numeric vector; the target values.
+  #' @param m atomic integer; the seasonal period. Defaults to 1 if non-seasonal.
   #' @param na.rm logical; should NAs be removed before calculation?
-  #' @return An atomic numeric vector containing the calculated MASE
+  #' @return An atomic numeric vector containing the calculated MASE.
   #' @examples 
-  #' mase(c(1, 2, 3))                      #> Error: different lengths (3, 0)
+  #' \dontrun{mase(c(1, 2, 3))}            #> Error: different lengths (3, 0)
   #' mase(c(1, 2, 3), c(1, 4, 4))          #> 0.3333333
   #' mase(c(1, 2, NA, 4), c(2, 2, 5, NA))  #> NA
   #' mase(c(1, 2, 3, NA, 4),
@@ -145,18 +148,14 @@ mase <- function(x, target, m = 1, na.rm = FALSE){
 
 # TODO(Max): Move this to a utilities package
 Shift <- function(x, n){
-  #' Shift
+  #' Shift (Internal)
   #' 
-  #' Shifts the contents of a vector n places to the right (positive n) or left
-  #' (negative n).
+  #' Shifts the contents of a vector \code{n} places to the right (positive
+  #' \code{n}) or left (negative \code{n}).
   #' 
   #' @param x vector; the values to be shifted
   #' @param n atomic integer; the number of places to Shift
-  #' @return the shifted vector x (same length as the input vector)
-  #' @examples 
-  #' Shift(c(1, 2, 3), 1)  #> c(NA, 1, 2)
-  #' Shift(c(1, 2, 3), 0)  #> c(1, 2, 3)
-  #' Shift(c(1, 2, 3), -1) #> c(2, 3, NA)
+  #' @return the shifted vector \code{x} (same length as the input vector)
 
   # If n > length(x), then you're shifting everything out of the scope of x
   if (abs(n) > length(x)){
@@ -165,10 +164,10 @@ Shift <- function(x, n){
   
   if (n < 0){
     # Shift left
-    return(c(tail(x, length(x) - abs(n)), rep(NA, abs(n))))
+    return(c(utils::tail(x, length(x) - abs(n)), rep(NA, abs(n))))
   } else {
     # Shift right
-    return(c(rep(NA, n), head(x, length(x) - n)))
+    return(c(rep(NA, n), utils::head(x, length(x) - n)))
   }
 }
 

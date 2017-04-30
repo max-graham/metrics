@@ -2,7 +2,7 @@
 % Please edit documentation in R/error.R
 \name{Shift}
 \alias{Shift}
-\title{Shift}
+\title{Shift (Internal)}
 \usage{
 Shift(x, n)
 }
@@ -12,14 +12,9 @@ Shift(x, n)
 \item{n}{atomic integer; the number of places to Shift}
 }
 \value{
-the shifted vector x (same length as the input vector)
+the shifted vector \code{x} (same length as the input vector)
 }
 \description{
-Shifts the contents of a vector n places to the right (positive n) or left
-(negative n).
-}
-\examples{
-Shift(c(1, 2, 3), 1)  #> c(NA, 1, 2)
-Shift(c(1, 2, 3), 0)  #> c(1, 2, 3)
-Shift(c(1, 2, 3), -1) #> c(2, 3, NA)
+Shifts the contents of a vector \code{n} places to the right (positive
+\code{n}) or left (negative \code{n}).
 }
