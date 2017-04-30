@@ -4,7 +4,11 @@ Version: 0.0.0.9000
 Authors@R: person("Max", "Graham", email = "maxgraham@outlook.com", role = c("aut", "cre"))
 Description: A collection of useful metrics for data scientists. Designed for measuring things like errors, similarity, etc.
 Depends: R (>= 3.3.0)
-License: MIT
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.0.1.9000
+Imports:
+	utils
+Suggests:
+    testthat
