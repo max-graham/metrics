@@ -122,11 +122,11 @@ mase <- function(x, target, m = 1, na.rm = FALSE){
   #' @return An atomic numeric vector containing the calculated MASE.
   #' @examples 
   #' \dontrun{mase(c(1, 2, 3))}            #> Error: different lengths (3, 0)
-  #' mase(c(1, 2, 3), c(1, 4, 4))          #> 0.3333333
+  #' mase(c(1, 2, 3), c(1, 4, 4))          #> 0.66667
   #' mase(c(1, 2, NA, 4), c(2, 2, 5, NA))  #> NA
   #' mase(c(1, 2, 3, NA, 4),
   #'      c(2, 2, 5, NA, NA),
-  #'      na.rm = TRUE)                    #> 0.6666667
+  #'      na.rm = TRUE)                    #> 0.66667
   #' @export
 
   # Error handling
@@ -141,8 +141,13 @@ mase <- function(x, target, m = 1, na.rm = FALSE){
     target <- target[!mask]
     n <- length(x)  # update after masking NAs
   }
+  if(m <= 0){
+    stop("m must be positive.")
+  }
+  if(m >= length(target)){
+    stop("m must be less than the number of periods in target.")
+  }
   
   y <- Shift(target, m)
-  
   sum(abs(target - x)) / ((n / (n - m)) * sum(abs(target[(m + 1):n] - y[(m + 1):n])))
 }

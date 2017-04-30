@@ -30,9 +30,9 @@ This will return \code{Inf} when the last \code{length(x) - m}
 }
 \examples{
 \dontrun{mase(c(1, 2, 3))}            #> Error: different lengths (3, 0)
-mase(c(1, 2, 3), c(1, 4, 4))          #> 0.3333333
+mase(c(1, 2, 3), c(1, 4, 4))          #> 0.66667
 mase(c(1, 2, NA, 4), c(2, 2, 5, NA))  #> NA
 mase(c(1, 2, 3, NA, 4),
      c(2, 2, 5, NA, NA),
-     na.rm = TRUE)                    #> 0.6666667
+     na.rm = TRUE)                    #> 0.66667
 }
