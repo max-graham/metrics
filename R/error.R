@@ -99,9 +99,10 @@ mape <- function(x, target, na.rm = FALSE){
     mask <- (is.na(x) | is.na(target))
     x <- x[!mask]
     target <- target[!mask]
+    n <- length(x)
   }
   
-  (100 / n) * sum(abs((target - x) / target))
+  (100 / n) * sum(abs((target - x)) / abs(target))
 }
 
 mase <- function(x, target, m = 1, na.rm = FALSE){
@@ -145,29 +146,3 @@ mase <- function(x, target, m = 1, na.rm = FALSE){
   
   sum(abs(target - x)) / ((n / (n - m)) * sum(abs(target[(m + 1):n] - y[(m + 1):n])))
 }
-
-# TODO(Max): Move this to a utilities package
-Shift <- function(x, n){
-  #' Shift (Internal)
-  #' 
-  #' Shifts the contents of a vector \code{n} places to the right (positive
-  #' \code{n}) or left (negative \code{n}).
-  #' 
-  #' @param x vector; the values to be shifted
-  #' @param n atomic integer; the number of places to Shift
-  #' @return the shifted vector \code{x} (same length as the input vector)
-
-  # If n > length(x), then you're shifting everything out of the scope of x
-  if (abs(n) > length(x)){
-    return(rep(NA, length(x)))
-  }
-  
-  if (n < 0){
-    # Shift left
-    return(c(utils::tail(x, length(x) - abs(n)), rep(NA, abs(n))))
-  } else {
-    # Shift right
-    return(c(rep(NA, n), utils::head(x, length(x) - n)))
-  }
-}
-

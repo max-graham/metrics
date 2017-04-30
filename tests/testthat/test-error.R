@@ -1,4 +1,3 @@
-#testthat
 library(metrics)
 
 context("RMSE")
@@ -34,6 +33,18 @@ test_that("RMSE breaks on character input.", {
   expect_error(rmse(letters[1:5], 1:5))
 })
 
+test_that("RMSE breaks when inputs have different lengths", {
+  expect_error(rmse(c(1, 2, 3), c(1, 3, 5, 7, 9)))
+})
+
+test_that("RMSE correctly removes NAs", {
+  x <- c(NA, 1:5)
+  y <- c(NA, seq(1, 9, 2))
+  
+  expect_equal(rmse(x, y, na.rm = TRUE), 2.4494897427831780981972840747059)
+  expect_equal(rmse(x, na.rm = TRUE), 3.3166247903553998491149327366707)
+})
+
 context("MSE")
 test_that("MSE works for numeric input", {
   x <- c(1.0, 2.0, 3.0, 4.0, 5.0)
@@ -65,3 +76,50 @@ test_that("MSE breaks on character input.", {
   expect_error(mse(as.character(1:5)))
   expect_error(mse(letters[1:5], 1:5))
 })
+
+test_that("MSE breaks when inputs have different lengths", {
+  expect_error(mse(c(1, 2, 3), c(1, 3, 5, 7, 9)))
+})
+
+test_that("MSE correctly removes NAs", {
+  x <- c(NA, 1:5)
+  y <- c(NA, seq(1, 9, 2))
+  
+  expect_equal(mse(x, y, na.rm= TRUE), 6)
+  expect_equal(mse(x, na.rm = TRUE), 11)
+})
+
+context("MAPE")
+test_that("MAPE works for numeric input", {
+  x <- c(1.0, 2.0, 3.0, 4.0, 5.0)
+  y <- c(1.0, 3.0, 5.0, 7.0, 9.0)
+  
+  expect_equal(mape(x, y), 32.126984126984126984126984126984)
+})
+
+test_that("MAPE works for integer input",{
+  x <- as.integer(1:5)
+  y <- as.integer(seq(1, 9, by = 2))
+  
+  expect_equal(mape(x, y), 32.126984126984126984126984126984)
+})
+
+test_that("MAPE breaks on character input.", {
+  expect_error(mape(letters[1:5]))
+  expect_error(mape(LETTERS[1:5]))
+  expect_error(mape(as.character(1:5)))
+  expect_error(mape(letters[1:5], 1:5))
+})
+
+test_that("MAPE breaks when x and target lengths differ.", {
+  expect_error(mape(1:10, 1:5))
+  expect_error(mape(1:10))
+})
+
+test_that("MAPE correctly removes NAs.", {
+  x <- c(1:5, NA)
+  y <- c(seq(1, 9, by = 2), NA)
+  
+  expect_equal(mape(x, y, na.rm = TRUE), 32.126984126984126984126984126984)
+})
+
