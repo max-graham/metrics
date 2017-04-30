@@ -123,3 +123,49 @@ test_that("MAPE correctly removes NAs.", {
   expect_equal(mape(x, y, na.rm = TRUE), 32.126984126984126984126984126984)
 })
 
+context("MASE")
+test_that("MASE breaks when target isn't specified.", {
+  expect_error(mase(1:10))
+})
+
+test_that("MASE breaks when x and target lengths differ.", {
+  expect_error(mase(1:10, 1:5))
+  expect_error(mase(1:5, 1:10))
+})
+
+test_that("MAPE breaks on character input.", {
+  expect_error(mase(letters[1:5], letters[1:5]))
+  expect_error(mase(LETTERS[1:5]))
+  expect_error(mase(as.character(1:5)))
+  expect_error(mase(letters[1:5], 1:5))
+})
+
+test_that("MASE works for numeric input.", {
+  expect_equal(mase(c(1, 2, 3), c(1, 4, 4)), 0.6666666666666666666666667)
+  expect_equal(mase(c(1, 2, NA, 4), c(2, 2, 5, NA)), NA_real_)
+})
+
+test_that("MASE works for integer input.", {
+  expect_equal(mase(c(1L, 2L, 3L), c(1L, 4L, 4L)), 0.6666666666666666666666667)
+  expect_equal(mase(c(1L, 2L, NA, 4L), c(2L, 2L, 5L, NA)), NA_real_)
+})
+
+test_that("MASE correctly removes NAs.", {
+  expect_equal(mase(c(1, 2, 3, NA, 4),
+                    c(2, 2, 5, NA, NA),
+                    na.rm = TRUE),
+               0.66666666666666666666667)
+})
+
+test_that("MASE returns Inf when the target is constant.", {
+  expect_equal(mase(1:10, rep(10, 10), m = 2), Inf)
+})
+
+test_that("MASE breaks when m is negative (or zero).", {
+  expect_error(mase(1:10, 1:10, -5))
+  expect_error(mase(1:10, 1:10, 0))
+})
+
+test_that("MASE breaks when m > length(target).", {
+  expect_error(mase(1:10, 1:10, 100))
+})
