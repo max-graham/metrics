@@ -31,7 +31,7 @@ ae <- function(x, target, na.rm = FALSE){
     target <- target[!mask]
   }
   
-  abs(target - x)
+  sum(abs(target - x))
 }
 
 mse <- function(x, target = NULL, na.rm = FALSE){
