@@ -4,37 +4,34 @@
 #
 # A collection of useful error metrics
 
-
-rmse <- function(x, target = NULL, na.rm = FALSE){
-  #' RMSE
+ae <- function(x, target, na.rm = FALSE){
+  #' Absolute Error
   #' 
-  #' Calculates the Root Mean Squared Error(RMSE) between x and the target. If
-  #' target is NULL, calculates the RMSE on the input vector x.
+  #' Calculates the absolute difference between \code{x} and \code{target}.
   #' 
-  #' @param x numeric vector
-  #' @param target numeric vector; If not NULL, calculates rmse(x - target)
-  #' @param na.rm logical; should NAs be removed before calculation?
-  #' @return An atomic numeric vector containing the calculated RMSE
+  #' @param x numeric vector; the values to check
+  #' @param target numeric vector; the values to compare against
+  #' @param na.rm logical; should we remove NA cases?
+  #' @return atomic numeric value; the absolute error
   #' @examples 
-  #' rmse(c(1, 2, 3))             #> 2.160247
-  #' rmse(c(1, 2, 3), c(1, 4, 4)) #> 1.290994
-  #' rmse(c(1, 2, NA))            #> NA
+  #' ae(c(1, 2, 3), c(1, 2, 4))     #> 1
+  #' ae(c(1, 2, 3), c(2, 3, 4))     #> 3
+  #' ae(c(1, 2, 3), c(-1, -2, -3))  #> 12
   #' @export
   
   # Error handling
   n <- length(x)
-  if (!is.null(target)){
-    if (n <= 1 || n != length(target)) {
-      stop("Arguments x and target have different lengths: ",
-           length(x), " and ", length(target), ".")
-    }
-    return(rmse(x - target, na.rm = na.rm))
+  if (n < 1 || n != length(target)) {
+    stop("Arguments x and target have different lengths: ",
+         length(x), " and ", length(target), ".")
   }
   if (na.rm){
-    x <- x[!is.na(x)]
+    mask <- (is.na(x) | is.na(target))
+    x <- x[!mask]
+    target <- target[!mask]
   }
   
-  sqrt(mse(x))  # return
+  abs(target - x)
 }
 
 mse <- function(x, target = NULL, na.rm = FALSE){
@@ -68,6 +65,38 @@ mse <- function(x, target = NULL, na.rm = FALSE){
   }
   
   mean(x^2)  # return
+}
+
+rmse <- function(x, target = NULL, na.rm = FALSE){
+  #' RMSE
+  #' 
+  #' Calculates the Root Mean Squared Error(RMSE) between x and the target. If
+  #' target is NULL, calculates the RMSE on the input vector x.
+  #' 
+  #' @param x numeric vector
+  #' @param target numeric vector; If not NULL, calculates rmse(x - target)
+  #' @param na.rm logical; should NAs be removed before calculation?
+  #' @return An atomic numeric vector containing the calculated RMSE
+  #' @examples 
+  #' rmse(c(1, 2, 3))             #> 2.160247
+  #' rmse(c(1, 2, 3), c(1, 4, 4)) #> 1.290994
+  #' rmse(c(1, 2, NA))            #> NA
+  #' @export
+  
+  # Error handling
+  n <- length(x)
+  if (!is.null(target)){
+    if (n <= 1 || n != length(target)) {
+      stop("Arguments x and target have different lengths: ",
+           length(x), " and ", length(target), ".")
+    }
+    return(rmse(x - target, na.rm = na.rm))
+  }
+  if (na.rm){
+    x <- x[!is.na(x)]
+  }
+  
+  sqrt(mse(x))  # return
 }
 
 mape <- function(x, target, na.rm = FALSE){
