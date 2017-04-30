@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/max-graham/metrics.svg?branch=master)](https://travis-ci.org/max-graham/metrics)
+
 # metrics
 Useful metrics for data science
 
