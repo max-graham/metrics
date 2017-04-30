@@ -169,3 +169,38 @@ test_that("MASE breaks when m is negative (or zero).", {
 test_that("MASE breaks when m > length(target).", {
   expect_error(mase(1:10, 1:10, 100))
 })
+
+context("AE")
+test_that("AE works for numeric input.", {
+  x <- c(1, 2, 3)
+  expect_equal(ae(x, c(1, 2, 4)), 1)
+  expect_equal(ae(x, c(-1, -2, -3)), 12)
+  expect_equal(ae(x, c(2, 3, 4)), 3)
+})
+
+test_that("AE works for integer input.", {
+  x <- as.integer(c(1, 2, 3))
+
+  expect_equal(ae(x, c(1L, 2L, 4L)), 1)
+  expect_equal(ae(x, c(-1L, -2L, -3L)), 12)
+  expect_equal(ae(x, c(2L, 3L, 4L)), 3)
+})
+
+test_that("AE breaks when x and target have different lengths.", {
+  expect_error(ae(c(1, 2, 3), c(1)))
+})
+
+test_that("AE correctly handles NAs.", {
+  x <- c(NA, 1:5)
+  y <- c(1:5, NA)
+  
+  expect_equal(ae(x, y, na.rm = TRUE), 4)
+  expect_equal(ae(x, y), NA_real_)
+})
+
+test_that("AE breaks on character input.", {
+  expect_error(ae(letters[1:5], letters[1:5]))
+  expect_error(ae(LETTERS[1:5]))
+  expect_error(ae(as.character(1:5)))
+  expect_error(ae(letters[1:5], 1:5))
+})
