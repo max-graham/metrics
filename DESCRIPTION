@@ -1,8 +1,8 @@
 Package: metrics
 Title: A Collection of Useful Metrics
-Version: 0.0.0.9000
+Version: 0.1.9000
 Authors@R: person("Max", "Graham", email = "maxgraham@outlook.com", role = c("aut", "cre"))
-Description: A collection of useful metrics for data scientists. Designed for measuring things like errors, similarity, etc.
+Description: A collection of useful metrics for data scientists. Designed for measuring things like errors, distances, similarity, classification performance, etc.
 Depends: R (>= 3.3.0)
 License: MIT + file LICENSE
 Encoding: UTF-8
