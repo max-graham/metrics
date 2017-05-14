@@ -50,7 +50,7 @@ test_that("MSE works for numeric input", {
   y <- c(1.0, 3.0, 5.0, 7.0, 9.0)
   
   expect_equal(mse(x, y), 6)
-  expect_equal(mse(x), 11)
+  expect_equal(mse(x, 2*x), 11)
 })
 
 test_that("MSE works for integer input",{
@@ -58,7 +58,7 @@ test_that("MSE works for integer input",{
   y <- as.integer(seq(1, 9, by = 2))
   
   expect_equal(mse(x, y), 6)
-  expect_equal(mse(x), 11)
+  expect_equal(mse(x, 2*x), 11)
 })
 
 test_that("MSE works for logical input.", {
@@ -66,7 +66,7 @@ test_that("MSE works for logical input.", {
   y <- c(T, F, T, F)
   
   expect_equal(mse(x, y), 0.5)
-  expect_equal(mse(x), 1)
+  expect_equal(mse(x, 2*x), 1)
 })
 
 test_that("MSE breaks on character input.", {
@@ -85,7 +85,7 @@ test_that("MSE correctly removes NAs", {
   y <- c(NA, seq(1, 9, 2))
   
   expect_equal(mse(x, y, na.rm= TRUE), 6)
-  expect_equal(mse(x, na.rm = TRUE), 11)
+  expect_equal(mse(x, 2*x, na.rm = TRUE), 11)
 })
 
 context("MAPE")

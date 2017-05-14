@@ -4,12 +4,12 @@
 \alias{mse}
 \title{MSE}
 \usage{
-mse(x, target = NULL, na.rm = FALSE)
+mse(x, target, na.rm = FALSE)
 }
 \arguments{
 \item{x}{numeric vector}
 
-\item{target}{numeric vector; If not NULL, calculates mse(x - target)}
+\item{target}{numeric vector}
 
 \item{na.rm}{logical; should NAs be removed before calculation?}
 }
@@ -18,11 +18,9 @@ An atomic numeric vector containing the calculated MSE
 }
 \description{
 Calculates the Mean Squared Error(MSE), or Mean Squared Deviation (MSD),
-between x and the target. If target is NULL, calculates the MSE on the
-input vector x.
+between x and the target. Calculation uses (target - x).
 }
 \examples{
-mse(c(1, 2, 3))             #> 4.666667
-mse(c(1, 2, 3), c(1, 4, 4)) #> 1.666667
-mse(c(1, 2, NA))            #> NA
+mse(c(1, 2, 3), c(1, 4, 4))      #> 1.666667
+mse(c(1, 2, NA), c(NA, 10, 20))  #> NA
 }

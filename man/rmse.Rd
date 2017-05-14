@@ -21,7 +21,6 @@ Calculates the Root Mean Squared Error(RMSE) between x and the target.
 Calculation uses (target - x).
 }
 \examples{
-rmse(c(1, 2, 3))             #> 2.160247
-rmse(c(1, 2, 3), c(1, 4, 4)) #> 1.290994
-rmse(c(1, 2, NA))            #> NA
+rmse(c(1, 2, 3), c(1, 4, 4))      #> 1.290994
+rmse(c(1, 2, NA), c(NA, 10, 20))  #> NA
 }
