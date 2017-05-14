@@ -1,7 +1,6 @@
 library(metrics)
 
 context("RMSE")
-
 test_that("RMSE works for numeric input", {
   x <- c(1.0, 2.0, 3.0, 4.0, 5.0)
   y <- c(1.0, 3.0, 5.0, 7.0, 9.0)
@@ -204,3 +203,35 @@ test_that("AE breaks on character input.", {
   expect_error(ae(as.character(1:5)))
   expect_error(ae(letters[1:5], 1:5))
 })
+
+context("SSE")
+test_that("SSE works for numeric input.", {
+  x <- c(1, 2, 3)
+  expect_equal(sse(x, c(1, 2, 4)), 1)
+  expect_equal(sse(x, c(-1, -2, -3)), 56)
+  expect_equal(sse(x, c(2, 3, 4)), 3)
+})
+
+test_that("SSE breaks when x and target have different lengths.", {
+  expect_error(sse(c(1, 2, 3), c(1)))
+})
+
+test_that("SSE correctly handles NAs.", {
+  x <- c(NA, 1:5)
+  y <- c(1:5, NA)
+  
+  expect_equal(sse(x, y, na.rm = TRUE), 4)
+  expect_equal(sse(x, y), NA_real_)
+})
+
+test_that("SSE breaks on character input.", {
+  expect_error(sse(letters[1:5], letters[1:5]))
+  expect_error(sse(LETTERS[1:5]))
+  expect_error(sse(as.character(1:5)))
+  expect_error(sse(letters[1:5], 1:5))
+})
+
+
+
+
+

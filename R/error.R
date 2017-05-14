@@ -31,7 +31,7 @@ ae <- function(x, target, na.rm = FALSE){
     target <- target[!mask]
   }
   
-  sum(abs(target - x))
+  sum(abs(target - x), na.rm = na.rm)
 }
 
 mse <- function(x, target = NULL, na.rm = FALSE){
@@ -64,7 +64,7 @@ mse <- function(x, target = NULL, na.rm = FALSE){
     x <- x[!is.na(x)]
   }
   
-  mean(x^2)  # return
+  mean(x^2, na.rm = na.rm)  # return
 }
 
 rmse <- function(x, target = NULL, na.rm = FALSE){
@@ -131,7 +131,7 @@ mape <- function(x, target, na.rm = FALSE){
     n <- length(x)
   }
   
-  (100 / n) * sum(abs((target - x)) / abs(target))
+  (100 / n) * sum(abs((target - x)) / abs(target), na.rm = na.rm)
 }
 
 mase <- function(x, target, m = 1, na.rm = FALSE){
@@ -180,3 +180,39 @@ mase <- function(x, target, m = 1, na.rm = FALSE){
   y <- Shift(target, m)
   sum(abs(target - x)) / ((n / (n - m)) * sum(abs(target[(m + 1):n] - y[(m + 1):n])))
 }
+
+sse <- function(x, target, na.rm = FALSE){
+  #' SSE
+  #' 
+  #' Calculates the sum of squared errors (SSE) between x and the target.
+  #' 
+  #' @param x numeric vector
+  #' @param target numeric vector
+  #' @param na.rm logical; should NAs be removed before the calculation?
+  #' @return An atomic numeric vector containing the calculated SSE
+  #' @examples 
+  #' sse(c(1, 2, 3), c(2, 3, 4))                 #> 1 + 1 + 1 =  3.0
+  #' sse(c(1, 2, 3), c(3, 4, 5))                 #> 4 + 4 + 4 = 12.0
+  #' sse(c(1, 2, NA), c(1, 2, 3))                #> NA
+  #' sse(c(1, 2, NA), c(1, 2, 3), na.rm = TRUE)  #> 0 + 0 = 0.0
+  
+  # Error Handling
+  n <- length(x)
+  if (n <= 1 || n != length(target)) {
+    stop("Arguments x and target have different lengths: ",
+         length(x), " and ", length(target), ".")
+  }
+  if(na.rm){
+    mask <- (is.na(x) | is.na(target))
+    x <- x[!mask]
+    target <- target[!mask]
+  }
+  sum((target - x)^2, na.rm = na.rm)
+}
+
+
+
+
+
+
+
