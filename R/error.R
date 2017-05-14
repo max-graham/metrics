@@ -195,6 +195,7 @@ sse <- function(x, target, na.rm = FALSE){
   #' sse(c(1, 2, 3), c(3, 4, 5))                 #> 4 + 4 + 4 = 12.0
   #' sse(c(1, 2, NA), c(1, 2, 3))                #> NA
   #' sse(c(1, 2, NA), c(1, 2, 3), na.rm = TRUE)  #> 0 + 0 = 0.0
+  #' @export
   
   # Error Handling
   n <- length(x)
