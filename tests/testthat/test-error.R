@@ -6,7 +6,7 @@ test_that("RMSE works for numeric input", {
   y <- c(1.0, 3.0, 5.0, 7.0, 9.0)
   
   expect_equal(rmse(x, y), 2.4494897427831780981972840747059)
-  expect_equal(rmse(x), 3.3166247903553998491149327366707)
+  expect_equal(rmse(x, 2*x), 3.3166247903553998491149327366707)
 })
 
 test_that("RMSE works for integer input",{
@@ -14,7 +14,7 @@ test_that("RMSE works for integer input",{
   y <- as.integer(seq(1, 9, by = 2))
   
   expect_equal(rmse(x, y), 2.4494897427831780981972840747059)
-  expect_equal(rmse(x), 3.3166247903553998491149327366707)
+  expect_equal(rmse(x, 2*x), 3.3166247903553998491149327366707)
 })
 
 test_that("RMSE works for logical input.", {
@@ -22,7 +22,7 @@ test_that("RMSE works for logical input.", {
   y <- c(T, F, T, F)
   
   expect_equal(rmse(x, y), 0.70710678118654752440084436210485)
-  expect_equal(rmse(x), 1)
+  expect_equal(rmse(x, 2*x), 1)
 })
 
 test_that("RMSE breaks on character input.", {
@@ -41,7 +41,7 @@ test_that("RMSE correctly removes NAs", {
   y <- c(NA, seq(1, 9, 2))
   
   expect_equal(rmse(x, y, na.rm = TRUE), 2.4494897427831780981972840747059)
-  expect_equal(rmse(x, na.rm = TRUE), 3.3166247903553998491149327366707)
+  expect_equal(rmse(x, 2*x, na.rm = TRUE), 3.3166247903553998491149327366707)
 })
 
 context("MSE")

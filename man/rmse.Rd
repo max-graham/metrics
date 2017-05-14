@@ -4,12 +4,12 @@
 \alias{rmse}
 \title{RMSE}
 \usage{
-rmse(x, target = NULL, na.rm = FALSE)
+rmse(x, target, na.rm = FALSE)
 }
 \arguments{
 \item{x}{numeric vector}
 
-\item{target}{numeric vector; If not NULL, calculates rmse(x - target)}
+\item{target}{numeric vector}
 
 \item{na.rm}{logical; should NAs be removed before calculation?}
 }
@@ -17,8 +17,8 @@ rmse(x, target = NULL, na.rm = FALSE)
 An atomic numeric vector containing the calculated RMSE
 }
 \description{
-Calculates the Root Mean Squared Error(RMSE) between x and the target. If
-target is NULL, calculates the RMSE on the input vector x.
+Calculates the Root Mean Squared Error(RMSE) between x and the target.
+Calculation uses (target - x).
 }
 \examples{
 rmse(c(1, 2, 3))             #> 2.160247
