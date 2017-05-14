@@ -12,7 +12,7 @@ Shift(x, n)
 \item{n}{atomic integer; the number of places to Shift}
 }
 \value{
-the shifted vector \code{x} (same length as the input vector)
+The shifted vector \code{x} (same length as the input vector)
 }
 \description{
 Shifts the contents of a vector \code{n} places to the right (positive

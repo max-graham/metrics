@@ -12,7 +12,7 @@ Shift <- function(x, n){
   #' 
   #' @param x vector; the values to be shifted
   #' @param n atomic integer; the number of places to Shift
-  #' @return the shifted vector \code{x} (same length as the input vector)
+  #' @return The shifted vector \code{x} (same length as the input vector)
   
   # If n > length(x), then you're shifting everything out of the scope of x
   if (abs(n) > length(x)){
