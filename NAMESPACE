@@ -3,6 +3,7 @@
 export(ae)
 export(mape)
 export(mase)
+export(mpe)
 export(mse)
 export(rmse)
 export(sse)

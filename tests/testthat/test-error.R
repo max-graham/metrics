@@ -231,7 +231,39 @@ test_that("SSE breaks on character input.", {
   expect_error(sse(letters[1:5], 1:5))
 })
 
+context("MPE")
+test_that("MPE works for numeric input", {
+  x <- c(1.0, 2.0, 3.0, 4.0, 5.0)
+  y <- c(1.0, 3.0, 5.0, 7.0, 9.0)
+  
+  expect_equal(mpe(x, y), 32.126984126984126984126984126984)
+})
 
+test_that("MPE works for integer input",{
+  x <- as.integer(1:5)
+  y <- as.integer(seq(1, 9, by = 2))
+  
+  expect_equal(mpe(x, y), 32.126984126984126984126984126984)
+})
+
+test_that("MPE breaks on character input.", {
+  expect_error(mpe(letters[1:5]))
+  expect_error(mpe(LETTERS[1:5]))
+  expect_error(mpe(as.character(1:5)))
+  expect_error(mpe(letters[1:5], 1:5))
+})
+
+test_that("MPE breaks when x and target lengths differ.", {
+  expect_error(mpe(1:10, 1:5))
+  expect_error(mpe(1:10))
+})
+
+test_that("MPE correctly removes NAs.", {
+  x <- c(1:5, NA)
+  y <- c(seq(1, 9, by = 2), NA)
+  
+  expect_equal(mpe(x, y, na.rm = TRUE), 32.126984126984126984126984126984)
+})
 
 
 

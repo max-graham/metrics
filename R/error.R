@@ -211,8 +211,40 @@ sse <- function(x, target, na.rm = FALSE){
   sum((target - x)^2, na.rm = na.rm)
 }
 
-
-
+mpe <- function(x, target, na.rm = FALSE){
+  #' MPE
+  #' 
+  #' Calculates the Mean Percentage Error(MPE) between x and the
+  #' target.
+  #' 
+  #' @param x numeric vector
+  #' @param target numeric vector
+  #' @param na.rm logical; should NAs be removed before calculation?
+  #' @return An atomic numeric vector containing the calculated MPE
+  #' @examples 
+  #' \dontrun{mpe(c(1, 2, 3))}            #> Error: different lengths (3, 0)
+  #' mpe(c(1, 2, 3), c(1, 4, 4))          #> 25.0
+  #' mpe(c(1, 2, NA, 4), c(2, 2, 5, NA))  #> NA
+  #' mpe(c(1, 2, NA, 4),
+  #'     c(2, 2, 5, NA),
+  #'     na.rm = TRUE)                    #> 12.5
+  #' @export
+  
+  # Error handling
+  n <- length(x)
+  if (n <= 1 || n != length(target)) {
+    stop("Arguments x and target have different lengths: ",
+         length(x), " and ", length(target), ".")
+  }
+  if (na.rm){
+    mask <- (is.na(x) | is.na(target))
+    x <- x[!mask]
+    target <- target[!mask]
+    n <- length(x)
+  }
+  
+  (100 / n) * sum((target - x) / target, na.rm = na.rm)
+}
 
 
 
